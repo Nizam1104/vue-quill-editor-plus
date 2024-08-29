@@ -222,9 +222,11 @@
         } else {
           const reader = new FileReader();
           reader.onload = (e) => {
-            if (e.target?.result) {
+            if (e.target && e.target.result) {
               const base64Image = e.target.result;
-              this.quill?.chain().focus().setImage({ src: base64Image }).run();
+              if (this.quill && this.quill.chain) {
+                this.quill.chain().focus().setImage({ src: base64Image }).run();
+              }
             }
           };
           reader.readAsDataURL(file);
