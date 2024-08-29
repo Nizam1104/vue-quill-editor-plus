@@ -6,6 +6,7 @@
   "author": "Nizam",
   "keywords": [
     "vue-quill-editor",
+    "vue-quill-editor-plus",
     "vue 2 quill image upload",
     "vue quill",
     "vue text editor",
@@ -22,11 +23,11 @@
     "CHANGELOG.md",
     "dist"
   ],
-  "main": "dist/vue-quill-editor-plus.js",
-  "unpkg": "dist/vue-quill-editor-plus.js",
-  "jsnext:main": "dist/vue-quill-editor-plus.js",
+  "main": "dist/vue-quill-editor.js",
+  "unpkg": "dist/vue-quill-editor.js",
+  "jsnext:main": "dist/vue-quill-editor.js",
   "jspm": {
-    "main": "dist/vue-quill-editor-plus.js",
+    "main": "dist/vue-quill-editor.js",
     "registry": "npm",
     "format": "esm"
   },
