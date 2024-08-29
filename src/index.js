@@ -2,7 +2,7 @@
 /*
 * Vue-Quill-Editor index.js
 * Author: surmon@foxmail.com
-* Github: https://github.com/surmon-china/vue-quill-editor
+* Github: https://github.com/Nizam1104/vue-quill-editor-plus
 */
 
 import _Quill from 'quill'

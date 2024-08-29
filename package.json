@@ -14,10 +14,10 @@
     "vue web editor",
     "vue editor"
   ],
-  "homepage": "",
+  "homepage": "https://github.com/Nizam1104/vue-quill-editor-plus",
   "repository": {
     "type": "git",
-    "url": ""
+    "url": "https://github.com/Nizam1104/vue-quill-editor-plus.git"
   },
   "files": [
     "CHANGELOG.md",
