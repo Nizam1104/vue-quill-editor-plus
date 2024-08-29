@@ -25,12 +25,13 @@ If no imageUploader is provided then the component will fall back to the origina
 
 ### example usage
 
+```html
 <quill-editor
   :options="editorOptions"
   :image-uploader="imageUploadCB"
   v-model="content"
 />
-
+```
 ### imageUploadCB
 
 ```javascript
