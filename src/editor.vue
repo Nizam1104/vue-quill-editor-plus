@@ -211,7 +211,7 @@
       },
 
       async uploadAndInsertImage(file) {
-        if (this.imageUploader) {
+        if (typeof this.imageUploader === 'function' && this.imageUploader !== null) {
           try {
             const url = await this.imageUploader(file)
             const range = this.quill.getSelection(true)
