@@ -251,9 +251,7 @@
               }
               return false;
             });
-
             console.log(placeholderPosition)
-
             if (placeholderPosition) {
               this.quill.transaction(() => {
                 this.quill.deleteText(placeholderPosition.index, placeholderText.length);
