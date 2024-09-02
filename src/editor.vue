@@ -210,14 +210,49 @@
         event.preventDefault()
       },
 
+      // async uploadAndInsertImage(file) {
+      //   if (typeof this.imageUploader === 'function' && this.imageUploader !== null) {
+      //     try {
+      //       const url = await this.imageUploader(file)
+      //       const range = this.quill.getSelection(true)
+      //       this.quill.insertEmbed(range.index, 'image', url)
+      //     } catch (error) {
+      //       console.error('Image upload failed:', error)
+      //     }
+      //   } else {
+      //     const reader = new FileReader();
+      //     reader.onload = (e) => {
+      //       if (e.target && e.target.result) {
+      //         const base64Image = e.target.result;
+      //         if (this.quill && this.quill.chain) {
+      //           this.quill.chain().focus().setImage({ src: base64Image }).run();
+      //         }
+      //       }
+      //     };
+      //     reader.readAsDataURL(file);
+      //   }
+      // },
       async uploadAndInsertImage(file) {
         if (typeof this.imageUploader === 'function' && this.imageUploader !== null) {
           try {
-            const url = await this.imageUploader(file)
-            const range = this.quill.getSelection(true)
-            this.quill.insertEmbed(range.index, 'image', url)
+            const range = this.quill.getSelection(true);
+            const placeholderId = `image-placeholder-${Date.now()}`;
+            const placeholderText = `Uploading image...`;
+
+            this.quill.insertText(range.index, placeholderText, 'italic', { id: placeholderId });
+            this.quill.setSelection(range.index + placeholderText.length);
+          
+            const url = await this.imageUploader(file);
+
+            const placeholderPosition = this.quill.getContents().ops.findIndex(op => 
+              op.attributes && op.attributes.id === placeholderId
+            );
+            if (placeholderPosition !== -1) {
+              this.quill.deleteText(placeholderPosition, placeholderText.length);
+              this.quill.insertEmbed(placeholderPosition, 'image', url);
+            }
           } catch (error) {
-            console.error('Image upload failed:', error)
+            console.error('Image upload failed:', error);
           }
         } else {
           const reader = new FileReader();
@@ -225,13 +260,20 @@
             if (e.target && e.target.result) {
               const base64Image = e.target.result;
               if (this.quill && this.quill.chain) {
+                const range = this.quill.getSelection(true);
+                const uploadingText = 'Uploading image, please wait...';
+                this.quill.insertText(range.index, uploadingText);
+                this.quill.setSelection(range.index + uploadingText.length);
+
+                // Replace the uploading text with the base64 image
+                this.quill.deleteText(range.index, uploadingText.length);
                 this.quill.chain().focus().setImage({ src: base64Image }).run();
               }
             }
           };
           reader.readAsDataURL(file);
         }
-      },
+      }
     },
     watch: {
       content(newVal, oldVal) {
