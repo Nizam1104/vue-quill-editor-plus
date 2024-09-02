@@ -1,7 +1,7 @@
 {
   "name": "vue-quill-editor-plus",
   "description": "Quill editor component for Vue 2.x with extended features",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "license": "MIT",
   "author": "Nizam",
   "keywords": [

@@ -240,16 +240,23 @@
             const placeholderText = `Uploading image...`;
 
             this.quill.insertText(range.index, placeholderText, 'italic', { id: placeholderId });
+
             this.quill.setSelection(range.index + placeholderText.length);
-          
+
             const url = await this.imageUploader(file);
 
-            const placeholderPosition = this.quill.getContents().ops.findIndex(op => 
-              op.attributes && op.attributes.id === placeholderId
-            );
-            if (placeholderPosition !== -1) {
-              this.quill.deleteText(placeholderPosition, placeholderText.length);
-              this.quill.insertEmbed(placeholderPosition, 'image', url);
+            const placeholderPosition = this.quill.scroll.descend((node) => {
+              if (node.attributes && node.attributes.id === placeholderId) {
+                return true;
+              }
+              return false;
+            });
+
+            if (placeholderPosition) {
+              this.quill.transaction(() => {
+                this.quill.deleteText(placeholderPosition.index, placeholderText.length);
+                this.quill.insertEmbed(placeholderPosition.index, 'image', url);
+              });
             }
           } catch (error) {
             console.error('Image upload failed:', error);
