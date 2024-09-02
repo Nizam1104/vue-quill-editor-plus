@@ -90,10 +90,6 @@
       imageUploader: {
         type: Function,
         default: null
-      },
-      showImageOption: {
-        type: Boolean,
-        default: false
       }
     },
     mounted() {
@@ -111,16 +107,7 @@
       initialize() {
         if (this.$el) {
           // Options
-          const tempOptions = JSON.parse(JSON.stringify(this.options))
-          if (this.showImageOption) {
-            tempOptions.modules.toolbar.push(['image'])
-          }
-          this._options = Object.assign({}, this.defaultOptions, this.globalOptions, tempOptions)
-
-          // Conditionally add image option to toolbar
-          // if (this.imageUploader) {
-          //   this._options.modules.toolbar.push(['image']) // Add image option if imageUploader is provided
-          // }
+          this._options = Object.assign({}, this.defaultOptions, this.globalOptions, this.options)
 
           // Instance
           this.quill = new Quill(this.$refs.editor, this._options)
