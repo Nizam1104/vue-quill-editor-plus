@@ -28,7 +28,7 @@
         [{ 'font': [] }],
         [{ 'align': [] }],
         ['clean'],
-        ['link', 'video']
+        ['link', 'image', 'video']
       ]
     },
     placeholder: 'Insert text here ...',
@@ -90,6 +90,10 @@
       imageUploader: {
         type: Function,
         default: null
+      },
+      showImageOption: {
+        type: Boolean,
+        default: false
       }
     },
     mounted() {
@@ -107,7 +111,11 @@
       initialize() {
         if (this.$el) {
           // Options
-          this._options = Object.assign({}, this.defaultOptions, this.globalOptions, this.options)
+          const tempOptions = JSON.parse(JSON.stringify(this.options))
+          if (this.showImageOption) {
+            tempOptions.modules.toolbar.push(['image'])
+          }
+          this._options = Object.assign({}, this.defaultOptions, this.globalOptions, tempOptions)
 
           // Conditionally add image option to toolbar
           // if (this.imageUploader) {
