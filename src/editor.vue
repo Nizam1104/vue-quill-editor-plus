@@ -28,7 +28,7 @@
         [{ 'font': [] }],
         [{ 'align': [] }],
         ['clean'],
-        ['link', 'image', 'video']
+        ['link', 'video']
       ]
     },
     placeholder: 'Insert text here ...',
@@ -108,6 +108,11 @@
         if (this.$el) {
           // Options
           this._options = Object.assign({}, this.defaultOptions, this.globalOptions, this.options)
+
+          // Conditionally add image option to toolbar
+          if (this.imageUploader) {
+            this._options.modules.toolbar.push(['image']) // Add image option if imageUploader is provided
+          }
 
           // Instance
           this.quill = new Quill(this.$refs.editor, this._options)
