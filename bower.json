@@ -1,11 +1,10 @@
 {
-  "name": "vue-quill-editor",
+  "name": "vue-quill-editor-plus",
   "description": "Quill editor component for Vue",
   "main": "./dist/vue-quill-editor.js",
   "author": {
-    "name": "Surmon",
-    "email": "surmon@foxmail.com",
-    "url": "http://surmon.me"
+    "name": "nizam",
+    "email": "nizamvali1104@gmail.com"
   },
   "license": "MIT",
   "keywords": [
