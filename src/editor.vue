@@ -235,29 +235,21 @@
       async uploadAndInsertImage(file) {
         if (typeof this.imageUploader === 'function' && this.imageUploader !== null) {
           try {
+            this.quill.disable(); // Disable editor interactions
+
             const range = this.quill.getSelection(true);
-            const placeholderId = `image-placeholder-${Date.now()}`;
-            const placeholderText = `Uploading image...`;
-
-            this.quill.insertText(range.index, placeholderText, 'italic', { id: placeholderId });
-
-            this.quill.setSelection(range.index + placeholderText.length);
+            const uploadingText = 'Uploading image, please wait...';
+            this.quill.insertText(range.index, uploadingText);
+            this.quill.setSelection(range.index + uploadingText.length);
 
             const url = await this.imageUploader(file);
 
-            const placeholderPosition = this.quill.scroll.descend((node) => {
-              if (node.attributes && node.attributes.id === placeholderId) {
-                return true;
-              }
-              return false;
+            this.quill.transaction(() => { // Use transactional API
+              this.quill.deleteText(range.index, uploadingText.length);
+              this.quill.insertEmbed(range.index, 'image', url);
             });
-            console.log(placeholderPosition)
-            if (placeholderPosition) {
-              this.quill.transaction(() => {
-                this.quill.deleteText(placeholderPosition.index, placeholderText.length);
-                this.quill.insertEmbed(placeholderPosition.index, 'image', url);
-              });
-            }
+
+            this.quill.enable(); // Re-enable editor interactions
           } catch (error) {
             console.error('Image upload failed:', error);
           }
