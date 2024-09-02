@@ -244,10 +244,8 @@
 
             const url = await this.imageUploader(file);
 
-            this.quill.transaction(() => { // Use transactional API
-              this.quill.deleteText(range.index, uploadingText.length);
-              this.quill.insertEmbed(range.index, 'image', url);
-            });
+            this.quill.deleteText(range.index, uploadingText.length);
+            this.quill.insertEmbed(range.index, 'image', url);
 
             this.quill.enable(); // Re-enable editor interactions
           } catch (error) {
